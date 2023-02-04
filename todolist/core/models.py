@@ -3,6 +3,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-
-    class Meta(AbstractUser.Meta):
-        swappable = 'AUTH_USER_MODEL'
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
