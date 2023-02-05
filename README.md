@@ -41,31 +41,5 @@ Pycharm может предложить вам сделать это после 
 
 1. Иметь возможность запуска на локальной машине docker-контейнера 
 (необходимо для запуска контейнера с базы данных):
-- переходим в каталог `postgres_hm33` и выполняем команду `docker-compose up`.
+- выполняем команду `docker-compose up -d`.
 
-2. Выполнить необходимые команды для подготовки базы данных к работе:
-Текущий проект уже содержит настроенную базу данных, но пока еще она 
-пустая, не содержит таблиц, а всё её наполнение
-находится в фикстурах (в django - файлы в формате json содержащие данные для наполнения БД).
-
-Для начала нужно создать необходимые таблицы в базе данных с помощью команды:
-python3 manage.py migrate (находясь в папке `my_project_part_1`)
-а затем выполнить команду `python3 manage.py loadall` из этой же директории
-   (для загрузки всех объектов в базу данных).
-Уточним, что loadall является кастомной командой которая представляет
-собой несколько идущих подряд команд
-`python3 manage.py loaddata file.json` где file.json - файл с данными для БД
-Если команда выполнена успешна вы увидите следующий текст:
-```
-Installed 2 object(s) from 1 fixture(s)
-Installed 6 object(s) from 1 fixture(s)
-Installed 3 object(s) from 1 fixture(s)
-Installed 3 object(s) from 1 fixture(s)
-Installed 3 object(s) from 1 fixture(s)
-Installed 3 object(s) from 1 fixture(s)
-Installed 1 object(s) from 1 fixture(s)
-Installed 3 object(s) from 1 fixture(s)
-Installed 3 object(s) from 1 fixture(s)
-Installed 11 object(s) from 1 fixture(s)
-```
-После того как все подготовительные мероприятия выполнены - можно приступать к работе.
