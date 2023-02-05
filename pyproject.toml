@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "homework33"
+version = "0.1.0"
+description = ""
+authors = ["Nikalh <nikalhov@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.0.1"
+python-dotenv = "0.21.1"
+psycopg2 = "2.9.5"
+docker-compose = "^1.29.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
