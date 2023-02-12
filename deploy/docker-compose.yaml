@@ -30,7 +30,13 @@ services:
       db:
         condition: service_healthy
 
-
+  collect_static:
+    image: nalkhov/diploma_10:latest
+    env_file: .env
+    entrypoint: ''
+    volumes:
+      - django_static:/opt/static/
+    command: python3 manage.py collectstatic -c --no-input
 
   frontend:
     image: sermalenk/skypro-front:lesson-34
@@ -41,5 +47,10 @@ services:
       api:
         condition: service_started
 
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - django_static:/usr/share/nginx/html/static/
+
 volumes:
   diploma_pg_data:
+  django_static:
