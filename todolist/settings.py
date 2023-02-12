@@ -39,7 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'social_django',
     'todolist.core',
+]
+
+if DEBUG:
+    INSTALLED_APPS += [
+        'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +137,21 @@ STATIC_ROOT = BASE_DIR.joinpath('static')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# For VK OAUTH2
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_JSONFIELD_CUSTOM = 'django.db.models.JSONField'
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.environ.get('VK_OAUTH_ID')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.environ.get('VK_OAUTH_SECRET_KEY')
+
+AUTHENTICATION_BACKENDS = (
+     'social_core.backends.vk.VKOAuth2',
+     'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
+SOCIAL_AUTH_VK_OAUTH_SCOPE = ['email']
+SOCIAL_AUTH_VK_EXTRA_DATA = [('email', 'email')]
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/logged-in/'
+SOCIAL_AUTH_USER_MODEL = 'core.User'
