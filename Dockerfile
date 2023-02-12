@@ -20,7 +20,7 @@ COPY . .
 
 EXPOSE 8000
 
-ENTRYPOINT ["sh", "entrypoint.sh"]
+ENTRYPOINT ["bash", "entrypoint.sh"]
 
 FROM base_image as prod_image
 
