@@ -19,10 +19,10 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', default=False)
+DEBUG = os.getenv('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,7 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'social_django',
     'todolist.core',
+]
+
+if DEBUG:
+    INSTALLED_APPS += [
+        'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -80,11 +87,11 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('POSTGRES_HOST', default='127.0.0.1'),
-        'NAME': os.environ.get('POSTGRES_DB'),
-        'PORT': os.environ.get('POSTGRES_PORT', default=5432),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST', default='127.0.0.1'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        'PORT': os.getenv('POSTGRES_PORT', default=5432),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
     }
 }
 
@@ -130,3 +137,21 @@ STATIC_ROOT = BASE_DIR.joinpath('static')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# For VK OAUTH2
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_JSONFIELD_CUSTOM = 'django.db.models.JSONField'
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('VK_OAUTH_ID')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('VK_OAUTH_SECRET_KEY')
+
+AUTHENTICATION_BACKENDS = (
+     'social_core.backends.vk.VKOAuth2',
+     'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/logged-in/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
+SOCIAL_AUTH_VK_OAUTH_SCOPE = ['email']
+SOCIAL_AUTH_VK_EXTRA_DATA = [('email', 'email')]
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/logged-in/'
+SOCIAL_AUTH_USER_MODEL = 'core.User'
