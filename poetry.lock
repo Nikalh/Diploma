@@ -400,7 +400,7 @@ bcrypt = ["bcrypt"]
 name = "django-extensions"
 version = "3.2.1"
 description = "Extensions for Django"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1191,4 +1191,4 @@ six = "*"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "81191955b440bcd3bd2a859cc4f114063106815c65f05745168e8dd99bb83a06"
+content-hash = "6a9b211c8ce1f3337566821dd3cbc0afbbc707e2328811e6bf3d42922dfe4867"
