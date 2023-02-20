@@ -26,6 +26,7 @@ services:
     environment:
       POSTGRES_HOST: db
 
+
       #DEBUG: "False"
 
     depends_on:

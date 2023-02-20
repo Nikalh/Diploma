@@ -144,7 +144,6 @@ SOCIAL_AUTH_JSONFIELD_CUSTOM = 'django.db.models.JSONField'
 SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('VK_OAUTH_ID')
 SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('VK_OAUTH_SECRET_KEY')
 
-
 AUTHENTICATION_BACKENDS = (
      'social_core.backends.vk.VKOAuth2',
      'django.contrib.auth.backends.ModelBackend',
