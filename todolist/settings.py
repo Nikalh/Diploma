@@ -11,18 +11,20 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from envparse import env
 
-load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+ENV_PATH = BASE_DIR.joinpath('.env')
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
+if ENV_PATH.exists() and ENV_PATH.is_file():
+    env.read_envfile(ENV_PATH)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', default=False)
+DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -87,11 +89,11 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.getenv('POSTGRES_HOST', default='127.0.0.1'),
-        'NAME': os.getenv('POSTGRES_DB'),
-        'PORT': os.getenv('POSTGRES_PORT', default=5432),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST', default='127.0.0.1'),
+        'NAME': env('POSTGRES_DB'),
+        'PORT': env('POSTGRES_PORT', default=5432),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
     }
 }
 
@@ -141,8 +143,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_JSONFIELD_CUSTOM = 'django.db.models.JSONField'
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('VK_OAUTH_ID')
-SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('VK_OAUTH_SECRET_KEY')
+SOCIAL_AUTH_VK_OAUTH2_KEY = env('VK_OAUTH_ID')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = env('VK_OAUTH_SECRET_KEY')
 
 
 AUTHENTICATION_BACKENDS = (

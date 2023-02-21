@@ -5,7 +5,7 @@ services:
   db:
     image: postgres:15.1
     env_file:
-      - deploy/.env
+      - .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -21,7 +21,7 @@ services:
 
   api:
     image: nalkhov/diploma_10:latest
-    env_file: deploy/.env
+    env_file: .env
     restart: always
     environment:
       POSTGRES_HOST: db
@@ -38,7 +38,7 @@ services:
 
   collect_static:
     image: nalkhov/diploma_10:latest
-    env_file: deploy/.env
+    env_file: .env
     entrypoint: ''
     volumes:
       - django_static:/opt/static/

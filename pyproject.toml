@@ -16,6 +16,7 @@ django-restframework = "^0.0.1"
 djangorestframework = "^3.14.0"
 social-auth-app-django = "^5.0.0"
 django-extensions = "^3.2.1"
+envparse = "^0.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
