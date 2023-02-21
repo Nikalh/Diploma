@@ -38,7 +38,7 @@ services:
 
   collect_static:
     image: nalkhov/diploma_10:latest
-    env_file: .env
+    env_file: deploy/.env
     entrypoint: ''
     volumes:
       - django_static:/opt/static/
