@@ -21,7 +21,7 @@ services:
 
   api:
     image: nalkhov/diploma_10:latest
-    env_file: .env
+    env_file: deploy/.env
     restart: always
     environment:
       POSTGRES_HOST: db
