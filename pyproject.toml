@@ -15,6 +15,7 @@ psycopg2-binary = "^2.9.5"
 django-restframework = "^0.0.1"
 djangorestframework = "^3.14.0"
 social-auth-app-django = "^5.0.0"
+django-extensions = "^3.2.1"
 
 
 [tool.poetry.group.dev.dependencies]
