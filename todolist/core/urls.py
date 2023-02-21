@@ -4,8 +4,7 @@ from todolist.core.views import SingUpView, LoginView, ProfileView, UpdatePasswo
 
 urlpatterns = [
 
-    path('signup', SingUpView.as_view(), name='sign-up'),
-
+    path('sign-up', SingUpView.as_view(), name='sign-up'),
     path('login', LoginView.as_view(), name='login'),
     path('profile', ProfileView.as_view(), name='profile'),
     path('update_password', UpdatePasswordView.as_view(), name='update_password'),
