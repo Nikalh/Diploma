@@ -52,7 +52,7 @@ jobs:
           script: |
             cd diploma_10
             docker-compose pull
-            docker compose up -d
+            docker-compose up -d
       - name: Clean up
         if: always()
         uses: appleboy/scp-action@master
