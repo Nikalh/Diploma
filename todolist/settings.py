@@ -11,20 +11,21 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-from envparse import env
+# from envparse import env
+from dotenv import load_dotenv
 
-
-
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_PATH = BASE_DIR.joinpath('.env')
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-if ENV_PATH.exists() and ENV_PATH.is_file():
-    env.read_envfile(ENV_PATH)
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+# if ENV_PATH.exists() and ENV_PATH.is_file():
+#     env.read_envfile(ENV_PATH)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', default=False)
+DEBUG = os.getenv('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,14 +43,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
+    'todolist.goals',
     'social_django',
     'todolist.core',
+
 ]
 
 if DEBUG:
     INSTALLED_APPS += [
         'django_extensions',
-]
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,21 +86,19 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'core.User'
 WSGI_APPLICATION = 'todolist.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': env('POSTGRES_HOST', default='127.0.0.1'),
-        'NAME': env('POSTGRES_DB'),
-        'PORT': env('POSTGRES_PORT', default=5432),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST', default='127.0.0.1'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        'PORT': os.getenv('POSTGRES_PORT', default=5432),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -116,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -127,7 +128,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -143,13 +143,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_JSONFIELD_CUSTOM = 'django.db.models.JSONField'
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = env('VK_OAUTH_ID')
-SOCIAL_AUTH_VK_OAUTH2_SECRET = env('VK_OAUTH_SECRET_KEY')
-
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('VK_OAUTH_ID')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('VK_OAUTH_SECRET_KEY')
 
 AUTHENTICATION_BACKENDS = (
-     'social_core.backends.vk.VKOAuth2',
-     'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
@@ -160,3 +159,8 @@ SOCIAL_AUTH_VK_OAUTH_SCOPE = ['email']
 SOCIAL_AUTH_VK_EXTRA_DATA = [('email', 'email')]
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/logged-in/'
 SOCIAL_AUTH_USER_MODEL = 'core.User'
+
+# pagination
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+}

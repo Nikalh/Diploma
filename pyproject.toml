@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 django = "^4.0.1"
-python-dotenv = "0.21.1"
+
 docker-compose = "^1.29.2"
 gunicorn = "^20.1.0"
 psycopg2-binary = "^2.9.5"
@@ -17,6 +17,8 @@ djangorestframework = "^3.14.0"
 social-auth-app-django = "^5.0.0"
 django-extensions = "^3.2.1"
 envparse = "^0.2.0"
+python-dotenv = "0.13.0"
+django-filter = "^22.1"
 
 
 
