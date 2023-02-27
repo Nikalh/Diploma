@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from todolist.core.serializers import ProfileSerializer
-from todolist.goals.models import GoalCategory, Goal, GoalComment
+from todolist.goals.models import GoalCategory, Goal, GoalComment, BaseModel
 
 
 class GoalCategoryCreateSerializer(serializers.ModelSerializer):
@@ -67,30 +67,23 @@ class GoalCommentCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('id', 'created', 'updated', 'user', 'text', 'goal')
 
-    def validate_category(self, value: Goal) -> Goal:
-        # if value.is_deleted:
-        #     raise serializers.ValidationError("not allowed in deleted category")
-
+    def validate_comment(self, value: GoalComment) -> GoalComment:
         if value.user != self.context['request'].user:
-            raise serializers.ValidationError('not owner of category')
+            raise serializers.ValidationError('not owner of comment')
 
         return value
 
 
 class GoalCommentSerializer(serializers.ModelSerializer):
-    #user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    # goal = serializers.PrimaryKeyRelatedField(queryset=Goal.objects.all())
+    text = serializers.CharField(max_length=1000)
 
     class Meta:
         model = GoalComment
         fields = '__all__'
         read_only_fields = ('id', 'created', 'updated', 'user', 'text', 'goal')
 
-    def validate_category(self, value: Goal) -> Goal:
-        # if value.is_deleted:
-        #     raise serializers.ValidationError("not allowed in deleted category")
-
+    def validate_comment(self, value: GoalComment) -> GoalComment:
         if value.user != self.context['request'].user:
-            raise serializers.ValidationError('not owner of category')
+            raise serializers.ValidationError('not owner of comment')
 
         return value
