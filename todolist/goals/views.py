@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions, filters
@@ -91,10 +92,9 @@ class GoalCommentListView(ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCommentSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter, ]
-    #filterset_class = GoalDateFilter
-    ordering_fields = ['created']
+    # filterset_class = GoalDateFilter
+    ordering_fields = ['created', 'updated']
     ordering = ['created']
-    search_fields = ['created']
 
     def get_queryset(self):
         return GoalComment.objects.all()
@@ -105,4 +105,4 @@ class GoalCommentView(RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return GoalComment.objects.filter(user_id=self.request.user.id,)
+        return GoalComment.objects.filter(user=self.request.user)
