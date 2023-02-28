@@ -105,4 +105,5 @@ class GoalCommentView(RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return GoalComment.objects.all()
+        return GoalComment.objects.filter(user=self.request.user)
+
