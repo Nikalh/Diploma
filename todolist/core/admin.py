@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('username', 'email', 'first_name', 'last_name')
     readonly_fields = ('last_login', 'date_joined')
     fieldsets = (
-        (None, {'fields': ('username', "password")}),
+        (None, {'fields': ('username', 'password')}),
         ('Персональная информация', {'fields': ('email', 'first_name', 'last_name')}),
         ('Разрешения', {'fields': ('is_active', 'is_superuser', 'is_staff')}),
         ('Особенные даты', {'fields': ('last_login', 'date_joined')}),
