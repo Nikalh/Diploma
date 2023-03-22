@@ -19,6 +19,7 @@ django-extensions = "^3.2.1"
 envparse = "^0.2.0"
 python-dotenv = "0.13.0"
 django-filter = "^22.1"
+pydantic = "^1.10.6"
 
 
 

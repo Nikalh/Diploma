@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 # from envparse import env
+from typing import Any
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'todolist.goals',
     'social_django',
     'todolist.core',
+    'todolist.bot',
 
 ]
 
@@ -163,4 +166,31 @@ SOCIAL_AUTH_USER_MODEL = 'core.User'
 # pagination
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+}
+
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s} %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+        'null': {'class': 'logging.NullHandler'}
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG' if DEBUG else 'INFO',
+
+        },
+        'django.server': {'handlers': ['null']}
+    },
 }

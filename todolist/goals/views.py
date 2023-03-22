@@ -132,8 +132,7 @@ class GoalCommentListView(ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['goal']
     ordering_fields = ['-created']
-
-    # ordering = ['created']
+    ordering = ['created']
 
     def get_queryset(self):
         return GoalComment.objects.filter(goal__category__board__participants__user_id=self.request.user.id, )
