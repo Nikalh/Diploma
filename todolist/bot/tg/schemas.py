@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+""" Описываем ответы клиента"""
+
 
 class Chat(BaseModel):
     id: int

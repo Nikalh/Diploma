@@ -1,5 +1,4 @@
 import logging
-
 from django.core.management import BaseCommand
 from todolist.bot.models import TgUser
 from todolist.bot.tg.client import TgClient
@@ -10,6 +9,15 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
+    """ Создаем команды для клиента и его реакцию на них
+        handle - получаем сообщения
+        handle_message - отправляем сообщения об авторизации если пользователь не был авторизован.
+        Если авторизован, то отвечаем на полученные команды от пользователя.
+        handle_unauthorized - приветствуем пользователя и выдаем ему сгенерированный код для верификации.
+        handle_authorized - получаем от проверенного пользователя команды и выдаем ему данные в соответсвии с запросом.
+        choice_category - метод ля выбора доступной категории пользователем.
+        create_goal - метод для создания цели в выбранной пользователем категории.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.tg_client = TgClient()

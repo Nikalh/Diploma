@@ -20,6 +20,10 @@ envparse = "^0.2.0"
 python-dotenv = "0.13.0"
 django-filter = "^22.1"
 pydantic = "^1.10.6"
+pytest-django = "^4.5.2"
+pytest-factoryboy = "^2.5.1"
+djangorestframework-simplejwt = "^5.2.2"
+faker = "^18.3.1"
 
 
 

@@ -2,6 +2,8 @@ from django.urls import path
 
 from todolist.goals import views
 
+""" Конфигурация URL """
+
 urlpatterns = [
     # Goal category
     path('goal_category/create', views.GoalCategoryCreateView.as_view(), name='create-category'),

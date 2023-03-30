@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-# from envparse import env
+
 from typing import Any
 
 from dotenv import load_dotenv
@@ -23,8 +23,6 @@ ENV_PATH = BASE_DIR.joinpath('.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-# if ENV_PATH.exists() and ENV_PATH.is_file():
-#     env.read_envfile(ENV_PATH)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', default=False)
@@ -124,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-en'
 
 TIME_ZONE = 'UTC'
 

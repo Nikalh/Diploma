@@ -4,6 +4,7 @@ from todolist.goals.models import BoardParticipant, Board, GoalCategory, Goal, G
 
 
 class BoardPermissions(permissions.IsAuthenticated):
+    """ Создаем разрешение для доски, в котором проверяется роль пользователя"""
     def has_object_permission(self, request, view, obj: Board):
         _filters: dict = {'user_id': request.user.id, 'board_id': obj.id}
         if request.method not in permissions.SAFE_METHODS:
@@ -12,6 +13,7 @@ class BoardPermissions(permissions.IsAuthenticated):
 
 
 class GoalCategoryPermissions(permissions.IsAuthenticated):
+    """ Создаем разрешение для категории, в котором проверяется роль пользователя"""
     def has_object_permission(self, request, view, obj: GoalCategory):
         _filters: dict = {'user_id': request.user.id, 'board_id': obj.board_id}
         if request.method not in permissions.SAFE_METHODS:
@@ -20,6 +22,7 @@ class GoalCategoryPermissions(permissions.IsAuthenticated):
 
 
 class GoalPermissions(permissions.IsAuthenticated):
+    """ Создаем разрешение для цели, в котором проверяется роль пользователя"""
     def has_object_permission(self, request, view, obj: Goal):
         _filters: dict = {'user_id': request.user.id, 'board_id': obj.category.board_id}
         if request.method not in permissions.SAFE_METHODS:
@@ -28,5 +31,6 @@ class GoalPermissions(permissions.IsAuthenticated):
 
 
 class GoalCommentPermissions(permissions.IsAuthenticated):
+    """ Создаем разрешение для комментария цели, в котором проверяется пользователь"""
     def has_object_permission(self, request, view, obj: GoalComment):
         return request.method in permissions.SAFE_METHODS or obj.user_id == request.user.id

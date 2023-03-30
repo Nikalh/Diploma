@@ -9,11 +9,14 @@ from todolist.bot.tg.client import TgClient
 
 
 class VerificationView(GenericAPIView):
+    """ Создаем вью верификации пользователя"""
     model = TgUser
     permission_classes = [IsAuthenticated]
     serializer_class = TgUserSerializer
 
     def patch(self, request: Request, *args, **kwargs):
+        # проверяем верификационный код при успешной верификации сохраняем его в базе
+        # и отправляем сообщение о его успешной верификации
         s: TgUserSerializer = self.get_serializer(data=request.data)
         s.is_valid(raise_exception=True)
         s.tg_user.user = request.user

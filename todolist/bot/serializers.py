@@ -5,6 +5,7 @@ from todolist.bot.models import TgUser
 
 
 class TgUserSerializer(serializers.ModelSerializer):
+    """ Создаем сериализатор телеграмм пользователя"""
     tg_id = serializers.SlugField(source='chat_id', read_only=True)
 
     class Meta:
@@ -13,6 +14,7 @@ class TgUserSerializer(serializers.ModelSerializer):
         read_only_fields = ('tg_id', 'user_id')
 
     def validate_verification_code(self, code: str) -> str:
+        # проверяем верификационный код
         try:
             self.tg_user = TgUser.objects.get(verification_code=code)
         except TgUser.DoesNotExist:
@@ -20,4 +22,5 @@ class TgUserSerializer(serializers.ModelSerializer):
         return code
 
     def update(self, instance: TgUser, validated_data: dict):
+        # обновляем данные телеграмм пользователя
         return self.tg_user

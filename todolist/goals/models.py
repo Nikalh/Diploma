@@ -1,24 +1,25 @@
 from django.db import models
-from django.utils import timezone
-
 from todolist.core.models import User
 
 
 class BaseModel(models.Model):
+    """ Создаем Базовую модель, в которой указываются поля:
+        created - Дата создания
+        updated - Дата последнего обновления
+    """
     created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата последнего обновления', auto_now=True)
-
-    # def save(self, *args, **kwargs):
-    #     if not self.id:  # Когда объект только создается, у него еще нет id
-    #         self.created = timezone.now()  # проставляем дату создания
-    #     self.updated = timezone.now()  # проставляем дату обновления
-    #     return super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
 
 
 class Board(BaseModel):
+    """ Создаем модель Доски, в которой указываются поля:
+        title - название категории
+        is_deleted - статус категории (по умолчанию = не удалена)
+    """
+
     class Meta:
         verbose_name = 'Доска'
         verbose_name_plural = 'Доски'
@@ -28,6 +29,12 @@ class Board(BaseModel):
 
 
 class BoardParticipant(BaseModel):
+    """ Создаем модель Участник доски, в которой присутствуют поля:
+        board - связь с моделью Board
+        user - связь с моделью User
+        role - роль участника (по умолчанию = владелец)
+    """
+
     class Meta:
         unique_together = ('board', 'user')
         verbose_name = 'Участник'
@@ -54,6 +61,12 @@ class BoardParticipant(BaseModel):
 
 
 class GoalCategory(BaseModel):
+    """ Создаем модель Категорий, в которой указываются поля:
+        title - название категории
+        board - связь с моделью Board
+        user - связь с моделью User
+        is_deleted - статус категории (по умолчанию = не удалена)
+    """
     board = models.ForeignKey(Board, verbose_name='Доска', on_delete=models.PROTECT, related_name='categories')
     title = models.CharField(verbose_name='Название', max_length=255)
     user = models.ForeignKey(User, verbose_name='Автор', on_delete=models.PROTECT)
@@ -68,6 +81,15 @@ class GoalCategory(BaseModel):
 
 
 class Goal(BaseModel):
+    """ Создаем модель Цели, в которой указывается статус (по умолчанию = к выполнению),
+        приоритет (по умолчанию = средний). Также присутствуют поля:
+        title - название цели
+        description - описание цели (может быть не заполнено)
+        category - связь с моделью GoalCategory
+        due_date - дата завершения
+        user - связь с моделью User
+    """
+
     class Status(models.IntegerChoices):
         to_do = 1, 'К выполнению'
         in_progress = 2, 'В процессе'
@@ -98,12 +120,14 @@ class Goal(BaseModel):
 
 
 class GoalComment(BaseModel):
-    # title = models.CharField(verbose_name='Комментарий', max_length=255)
+    """ Создаем модель Комментарий к цели, в которой указывается:
+        goal - связь с моделью Goal
+        user - связь с моделью User
+        text - текст комментария
+    """
     goal = models.ForeignKey(Goal, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(to=User, verbose_name='Автор', on_delete=models.PROTECT)
     text = models.TextField(null=True, blank=True)
-
-    # is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 
     class Meta:
         verbose_name = 'Комментарий'

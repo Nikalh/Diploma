@@ -3,6 +3,9 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
+""" Конфигурация URL проекта.
+    Список `urlpatterns` URLs для вью проекта.
+"""
 urlpatterns = [
     path('core/', include(('todolist.core.urls', 'todolist.core'))),
     path('bot/', include(('todolist.bot.urls', 'todolist.bot'))),
@@ -12,7 +15,7 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns +=[
+    urlpatterns += [
         path('api-auth/', include('rest_framework.urls')),
 
     ]
